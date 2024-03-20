@@ -99,7 +99,9 @@ To implement the search options, you will need to utilize the Java Stream API an
 
 In this section, we will explain the file format used to store the dictionary data, including words, definitions, parts of speech, and example usages.
 
-The dictionary data will be stored in a plain text file (.txt) and file named `dictionary.txt` with the following format:
+The dictionary data will be stored in a plain text file (.txt) and file named `dictionary.txt` inside the `lib` folder. 
+
+It will havethe following format:
 
 ```
 word | definition | part of speech | example usage
@@ -132,7 +134,7 @@ When using a FileReader (or any other file reading mechanism if you are willing 
 
 In addition to the core functionality of the dictionary application, there are some additional requirements and considerations to enhance its performance and usability:
 
-1. **Loading Dictionary Data into Memory:** When the application starts, it should read all the words, definitions, parts of speech, and example usages from the dictionary.txt file and load them into an ArrayList in memory. This approach will ensure that word searches and other operations are performed on the in-memory data, rather than reading from the file each time, resulting in faster performance.
+1. **Loading Dictionary Data into Memory:** When the application starts, it should read all the words, definitions, parts of speech, and example usages from the dictionary.txt file and load them into an ArrayList (in memory). This approach will ensure that word searches and other operations are performed on the in-memory data, rather than reading from the file each time, resulting in faster performance.
 2. **Updating In-Memory Data and File:** Whenever a user adds or deletes a word from the dictionary, the application should update both the in-memory data structure (e.g., ArrayList) and the dictionary.txt file on disk. This way, the changes made during the current session are persisted and reflected in the file, ensuring that the updated dictionary is available the next time the application is launched.
 
 ## Part 6. Project recommendation 
@@ -184,20 +186,20 @@ Start Small and Connect the Dots:
 1. **Begin with the core classes:**
 - Focus on creating the Word class first, as it represents the fundamental unit of the dictionary application.
 - Implement the necessary attributes (word, definition, part of speech, example usage) and their respective getters and setters.
-- Ensure that the Word class is thoroughly tested and working correctly before moving on to other components.
+- Ensure that the Word class is working correctly before moving on to other components.
 - Create a new word instance and see that it works as expected.
 
 2. **Implement the FileWordReader and FileWordWriter classes:**
 
 - Create the WordReader and WordWriter interfaces, defining the contract for reading and writing word entries.
  - Implement the WordReader and WordWriter classes, which will handle file-based operations for reading and writing word entries, respectively.
-- Test these classes thoroughly to ensure they can correctly read and write word entries to and from a file.
+- Ensure they can correctly read and write word entries to and from a file.
 - Create an instance of WordReader and WordWriter to see you can read and write to dictionary.txt file in the requested format.
 
 3. **Develop the DictionaryManager class:**
 - Create the DictionaryManager class, which will act as the central component for managing the dictionary operations.
 - Implement methods for loading the dictionary from a file (using the WordReader), saving the dictionary to a file (using the WordWriter), and performing operations like searching, adding, and removing words.
-- Test the DictionaryManager class extensively to ensure it correctly interacts with the WordReader, WordWriter, and the Word class.
+- Ensure it correctly interacts with the WordReader, WordWriter, and the Word class.
 
 4. **Create the Menu class:**
 - Implement the Menu class, which will handle the command-line interface (CLI) and user interactions.
