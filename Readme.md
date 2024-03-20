@@ -135,7 +135,7 @@ In addition to the core functionality of the dictionary application, there are s
 1. **Loading Dictionary Data into Memory:** When the application starts, it should read all the words, definitions, parts of speech, and example usages from the dictionary.txt file and load them into an ArrayList in memory. This approach will ensure that word searches and other operations are performed on the in-memory data, rather than reading from the file each time, resulting in faster performance.
 2. **Updating In-Memory Data and File:** Whenever a user adds or deletes a word from the dictionary, the application should update both the in-memory data structure (e.g., ArrayList) and the dictionary.txt file on disk. This way, the changes made during the current session are persisted and reflected in the file, ensuring that the updated dictionary is available the next time the application is launched.
 
-## Part 6. Project structure recommendation 
+## Part 6. Project recommendation 
 
 To effectively organize and structure the dictionary application project, we recommend the following class and interface structure, this is just a recommendation and not a strict requirement:
 
