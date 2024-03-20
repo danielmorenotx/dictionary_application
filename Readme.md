@@ -189,7 +189,7 @@ Start Small and Connect the Dots:
 - Ensure that the Word class is working correctly before moving on to other components.
 - Create a new word instance and see that it works as expected.
 
-2. **Implement the FileWordReader and FileWordWriter classes:**
+1. **Implement the WordReader and WordWriter classes:**
 
 - Create the WordReader and WordWriter interfaces, defining the contract for reading and writing word entries.
  - Implement the WordReader and WordWriter classes, which will handle file-based operations for reading and writing word entries, respectively.
