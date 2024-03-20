@@ -218,11 +218,13 @@ Test the utility methods thoroughly to ensure they work as expected.
 - Single Responsibility Principle (SRP): Design classes and methods to have a single responsibility, making them more cohesive and easier to maintain.
 - Open/Closed Principle (OCP): Design classes and components to be open for extension but closed for modification, allowing for future enhancements without modifying the existing code.
 
-## Part 8. Project Presentation
+## Part 8. Project submission and Presentation
+
+When you are ready to push your code, push it to your own repository and not the one you cloned the starter code from.
 
 For the dictionary application project, you will be required to present their work in a technical manner, as the application does not have a graphical user interface (GUI). The presentation should focus on explaining the technical aspects of the project, including the design, implementation, and software engineering principles applied.
 
-Since you will have a limited time of 20 minutes for the presentation, it is essential to structure it effectively and cover the most important points. 
+Since you will have a limited time of 20 minutes for the presentation, it is essential to structure it effectively and cover the most important points listed int the Evaluation below. 
 
 ## Part 9. Project Feedback and Evaluation 
 
