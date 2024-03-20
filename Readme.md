@@ -42,6 +42,10 @@ Additionally, you may need to create the following packages:
 2. If its another error
 - create a new project and inside the src folder create the same package names and the DictionaryApp class.
 
+### what is the .keep and .gitignore
+
+- .keep is used to push empty folders to git, like the packages in your app. They jave .keep files so that git accepts the empty packages. You can remove them after cloning the repository,
+- .gitignore helps you to tell git to not include a certain file or folder in a commit, so that they will not be pushed. For example, this .gitignore has .idea inside of it as we dont need to share .idea folders.
 
 ## Part 3. The application 
 
