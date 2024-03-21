@@ -7,6 +7,11 @@ public class Word {
     public String partOfSpeech;
     public String exampleUsage;
 
+    @Override
+    public String toString() {
+        return word + " | " + definition + " | " + partOfSpeech + " | " + exampleUsage;
+    }
+
     // Object constructor
     public Word(String word, String definition, String partOfSpeech, String exampleUsage) {
         this.word = word;

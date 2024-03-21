@@ -8,12 +8,11 @@ import java.util.Scanner;
 public class WordWriter implements interfaces.WordWriter {
 
     @Override
-    public List<Word> writeEntries(String word) throws IOException {
+    public List<Word> writeEntries(Word word) throws IOException {
 
         try {
-            Word newWord = new Word(word, "","","");
-            FileWriter fileWriter = new FileWriter("./lib/example.txt", true);
-            fileWriter.write(word);
+            FileWriter fileWriter = new FileWriter("./lib/dictionary.txt", true);
+            fileWriter.write(word.toString() + "\n");
             fileWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -6,6 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface WordWriter {
-    List<Word> writeEntries(String word) throws IOException;
+    List<Word> writeEntries(Word word) throws IOException;
 
 }

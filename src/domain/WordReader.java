@@ -19,7 +19,6 @@ public class WordReader implements interfaces.WordReader {
             while (character != -1) {
                 char currentCharacter = (char) character;
                 wholeText += currentCharacter;
-                System.out.println(wholeText);
                 character = fileReader.read();
             }
             System.out.println(wholeText);
