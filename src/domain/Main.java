@@ -9,21 +9,17 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        // Display the menu
+        Menu menu = new Menu();
+        menu.menuHandler();
 
-        // ========= TESTING WORK WRITER ==========
+        // ========= WORD WRITER ==========
         WordWriter wordWriter = new WordWriter();
-        Scanner scanner = new Scanner(System.in);
-        String userInput = scanner.nextLine();
+        wordWriter.writeEntries();
 
-        Word newWord = new Word(userInput,"unknown","unknown","unknown");
-
-        wordWriter.writeEntries(newWord);
-
-        // ========= TESTING WORD READER ===========
+        // ========= WORD READER ===========
         WordReader wordReader = new domain.WordReader();
         wordReader.readEntries("./lib/dictionary.txt");
-
-
 
     }
 }
