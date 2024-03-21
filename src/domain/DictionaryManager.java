@@ -57,6 +57,42 @@ public class DictionaryManager {
         return arrayList;
     }
 
+    public void findWord() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the word(s) you would like to find. If more than one, please separate them by commas.");
+        String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
+        String[] wordSearch; // creating an array to hold the words in the search
 
+        if (wordInput.contains(",")) {
+            // multiple words searched separated by commas
+            wordSearch = wordInput.split(","); // turn search into a list of Strings
+            for (String word : wordSearch) {
+                if (word.trim().contains(" ")) { // trimming words then checking if it contains spaces within it
+                    System.out.println("Error: please ensure there are no spaces in your words");
+                    return;
+                }
+            }
+        } else if (wordInput.contains(" ")) {
+            // multiple words searched but they have spaces in them
+            System.out.println("Error: please separate the words by commas or ensure there are no accidental spaces.");
+            return;
+        } else {
+            // only one word searched
+            wordSearch = new String[1]; // creates a string with one element
+            wordSearch[0] = wordInput.trim(); // fills element with the one word that was searched
+        }
 
+        // Load dictionary entries
+        List<String[]> dictionaryEntries = loadDictionary();
+
+        // Search every dictionary entry for the words  in the wordSearch
+        for (String[] entry : dictionaryEntries) {
+            String dictionaryWord = entry[0]; // finds the first element of the entry, which is the word
+            for (String word : wordSearch) {
+                if (dictionaryWord.equalsIgnoreCase(word)) {
+                    System.out.println(String.join(" | ", entry));
+                }
+            }
+        }
+    }
 }
