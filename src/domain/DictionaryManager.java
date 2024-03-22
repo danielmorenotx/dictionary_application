@@ -53,7 +53,7 @@ public class DictionaryManager {
         List<Word> dictionaryEntries = loadDictionary();
 
         // Search every dictionary entry for the words  in the wordSearch
-        List<Word> matchingEntries = new ArrayList<>();
+        List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
 
         for (Word entry : dictionaryEntries) {
             String word = entry.getWord(); // finds the word
@@ -75,45 +75,38 @@ public class DictionaryManager {
         }
     }
 
-//    public void findDefinition() throws IOException {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
-//        String definitionInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
-//        String[] definitionSearch; // creating an array to hold the words in the search
-//
-//        if (definitionInput.contains(",")) {
-//            // multiple words searched separated by commas
-//            definitionSearch = definitionInput.split(","); // turn search into a list of Strings
-//            for (String definitionWord : definitionSearch) {
-//                if (definitionWord.trim().contains(" ")) { // trimming words then checking if it contains spaces within it
-//                    System.out.println("Error: please ensure there are no spaces in your words");
-//                    return;
-//                }
-//            }
-//        } else if (definitionInput.contains(" ")) {
-//            // multiple words searched but they have spaces in them
-//            System.out.println("Error: please separate the words by commas or ensure there are no spaces in your words.");
-//            return;
-//        } else {
-//            // only one word searched
-//            definitionSearch = new String[1]; // creates a string with one element
-//            definitionSearch[0] = definitionInput.trim(); // fills element with the one word that was searched
-//        }
-//
-//        // Load dictionary entries
-//        List<String[]> dictionaryEntries = loadDictionary();
-//
-//        // Search every dictionary entry for the words in the definitionSearch
-//        for (String[] entry : dictionaryEntries) {
-//            String wordDefinition = entry[1]; // finds the first second of the entry, which is the definition
-//            for (String word : definitionSearch) {
-//                if (wordDefinition.toLowerCase().contains(word.toLowerCase())) {
-//                    System.out.println(String.join(" | ", entry));
-//                }
-//            }
-//        }
-//    }
-//
+    public void findDefinition() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
+        String definitionInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
+        String[] definitionSearch = definitionInput.split(",");; // creating an array to hold the words in the search
+
+        // Load dictionary entries
+        List<Word> dictionaryEntries = loadDictionary();
+
+        // Search every dictionary entry definition for the words in the wordSearch
+        List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
+
+        for (Word entry : dictionaryEntries) { // for every line in my dictionary...
+            String definition = entry.getDefinition(); // finds the definition of each entry and
+            for (String searchedWord : definitionSearch) { // for every word in the list of words that are being searched...
+                if (definition.toLowerCase().contains(searchedWord)) { // if the full definition of an entry contains the word...
+                    matchingEntries.add(entry); // add the entry to the matchingEntries array
+                }
+            }
+        }
+
+        // Print matching entries
+        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
+            System.out.println("No matching definitions found.");
+        } else {
+            System.out.println("Matching entries:");
+            for (Word entry : matchingEntries) {
+                System.out.println(entry); // prints every entry in the matchingEntries list
+            }
+        }
+    }
+
 //    public void findStartsWith() throws IOException {
 //        Scanner scanner = new Scanner(System.in);
 //        System.out.println("Find words that start with: ");
