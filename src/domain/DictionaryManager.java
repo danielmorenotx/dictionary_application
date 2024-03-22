@@ -161,12 +161,34 @@ public class DictionaryManager {
                 System.out.println(String.join(" | ", entry));
             }
         }
-
-
     }
 
-    public void findEndsWith() {
+    public void findEndsWith() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Find words that end with: ");
+        String suffixSearch = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
 
+        // Load dictionary entries
+        List<String[]> dictionaryEntries = loadDictionary();
+
+        // Search for words starting with the prefix
+        List<String[]> entriesWithSuffix = new ArrayList<>(); // creating array list that has words starting with the prefix
+
+        for (String[] entry : dictionaryEntries) {
+            String word = entry[0]; // the word is at index 0 of every list
+            if (word.toLowerCase().endsWith(suffixSearch.toLowerCase())) {
+                entriesWithSuffix.add(entry); // add the matching entries to the wordsWithPrefix arrayList
+            }
+        }
+
+        // Printing matching entries
+        if (entriesWithSuffix.isEmpty()) { // checks if the arrayList is empty
+            System.out.println("There are no words ending with '" + suffixSearch + "'.");
+        } else {
+            for (String[] entry : entriesWithSuffix) {
+                System.out.println(String.join(" | ", entry));
+            }
+        }
     }
 
     public void findSubstring() throws IOException {
