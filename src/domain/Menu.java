@@ -37,7 +37,7 @@ public class Menu {
 
     public void menuHandler() throws IOException {
         Scanner scanner = new Scanner(System.in);
-        DictionaryManager wordFinder = new DictionaryManager();
+        DictionaryManager dictionaryManager = new DictionaryManager();
 
         while (true) {
             int choiceInput;
@@ -50,37 +50,36 @@ public class Menu {
             }
 
             switch (choiceInput) {
-                case 1:
-                    wordFinder.findWord();
+                case 1: // Find word
+                    dictionaryManager.findWord();
                     break;
-                case 2:
-                    wordFinder.findDefinition();
+                case 2: // Find definitions
+                    dictionaryManager.findDefinition();
                     break;
-                case 3:
-                    wordFinder.findStartsWith();
+                case 3: // Starts with...
+                    dictionaryManager.findStartsWith();
                     break;
-                case 4:
-                    wordFinder.findEndsWith();
+                case 4: // Ends with...
+                    dictionaryManager.findEndsWith();
                     break;
-                case 5:
-                    wordFinder.findWordsContaining();
+                case 5: // Contains...
+                    dictionaryManager.findWordsContaining();
                     break;
-                case 6:
-                    WordWriter wordWriter = new WordWriter();
-                    wordWriter.writeEntries();
+                case 6: // Add word
+                    dictionaryManager.addWord();
                     break;
-                case 7:
+                case 7: // Delete word...
                     // Delete a word
+                    dictionaryManager.deleteWord();
                     break;
-                case 8:
-                    // History
+                case 8: // History
                     break;
-                case 9:
+                case 9: // Creator
                     System.out.println("This dictionary app was created by Daniel Moreno.");
                     break;
-                case 10:
+                case 10: // Exit
                     System.out.println("Exiting application...");
-                    return; // exit the method
+                    return;
                 default:
                     System.out.println("Error: Invalid input. Please try again.");
                     break;
