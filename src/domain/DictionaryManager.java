@@ -135,6 +135,40 @@ public class DictionaryManager {
         }
     }
 
+    public void findStartsWith() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Find words that start with: ");
+        String prefixSearch = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
+
+        // Load dictionary entries
+        List<String[]> dictionaryEntries = loadDictionary();
+
+        // Search for words starting with the prefix
+        List<String[]> entriesWithPrefix = new ArrayList<>(); // creating array list that has words starting with the prefix
+
+        for (String[] entry : dictionaryEntries) {
+            String word = entry[0]; // the word is at index 0 of every list
+            if (word.toLowerCase().startsWith(prefixSearch.toLowerCase())) {
+                entriesWithPrefix.add(entry); // add the matching entries to the wordsWithPrefix arrayList
+            }
+        }
+
+        // Printing matching entries
+        if (entriesWithPrefix.isEmpty()) { // checks if the arrayList is empty
+            System.out.println("There are no words starting with '" + prefixSearch + "'.");
+        } else {
+            for (String[] entry : entriesWithPrefix) {
+                System.out.println(String.join(" | ", entry));
+            }
+        }
+
+
+    }
+
+    public void findEndsWith() {
+
+    }
+
     public void findSubstring() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.");
