@@ -8,22 +8,22 @@ import java.util.Scanner;
 
 public class WordReader implements interfaces.WordReader {
 
-    public String readEntries(String fileName) throws IOException {
+    public String readEntries(String fileName) {
 
         try {
-            String exampleFile = fileName;
-            FileReader fileReader = new FileReader(exampleFile);
+            String dictionaryFile = fileName;
+            FileReader fileReader = new FileReader(dictionaryFile);
             int character = fileReader.read();
-            String wholeText = "";
+            String wholeDictionary = "";
 
             while (character != -1) {
                 char currentCharacter = (char) character;
-                wholeText += currentCharacter;
+                wholeDictionary += currentCharacter;
                 character = fileReader.read();
             }
-            System.out.println(wholeText);
-            return wholeText;
-
+            System.out.println("Complete Dictionary:");
+            System.out.println(wholeDictionary);
+            return wholeDictionary;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

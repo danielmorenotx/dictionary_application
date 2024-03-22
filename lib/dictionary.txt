@@ -5,3 +5,5 @@ Apple | a fruit of the apple tree | noun | I ate the apple, and it was sour.
 peach | fruit of the peach tree | noun | The peach is rotten.
 kiwi | the fruit of a kiwi tree | noun | I cut the kiwi in half.
 test | an exam | noun | I am failing this test
+name | a word given to address a thing | noun | What is my name?
+letter | a character of an alphabet | noun | She wanted to fight me. I said letter.

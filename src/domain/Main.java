@@ -12,14 +12,19 @@ public class Main {
         // Display the menu
         Menu menu = new Menu();
         menu.menuHandler();
+//
+//        // ========= WORD READER ===========
+//        WordReader wordReader = new domain.WordReader();
+//        wordReader.readEntries("./lib/dictionary.txt");
 
-        // ========= WORD WRITER ==========
-        WordWriter wordWriter = new WordWriter();
-        wordWriter.writeEntries();
-
-        // ========= WORD READER ===========
-        WordReader wordReader = new domain.WordReader();
-        wordReader.readEntries("./lib/dictionary.txt");
+//        DictionaryManager manager = new DictionaryManager();
+//
+//        try {
+////            manager.dictionaryExists();
+//            manager.loadDictionary();
+//        } catch (IOException e) {
+//            System.err.println("An error occurred while managing the dictionary: " + e.getMessage());
+//        }
 
     }
 }

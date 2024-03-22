@@ -32,11 +32,13 @@ public class Menu {
             return;
         }
 
+        DictionaryManager wordFinder = new DictionaryManager();
         if (choiceInput == 1) {
             // find word(s)
+            wordFinder.findWord();
         } else if (choiceInput == 2) {
             // find words by definition
-            
+            wordFinder.findDefinition();
         } else if (choiceInput == 3) {
             // Find all words that start with
 
@@ -45,7 +47,7 @@ public class Menu {
 
         } else if (choiceInput == 5) {
             // Find all words containing
-
+            wordFinder.findSubstring();
         } else if (choiceInput == 6) {
             // Add a word
             WordWriter wordWriter = new WordWriter();
