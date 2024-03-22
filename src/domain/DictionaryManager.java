@@ -3,15 +3,18 @@ package domain;
 import interfaces.WordReader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DictionaryManager {
 
 
     // ======== METHOD TO STORE CONTENT OF DICTIONARY IN AN ARRAY =============
-    public List<Word> loadDictionary() throws IOException { // returns list of word objects
+    public ArrayList<Word> loadDictionary() throws IOException { // returns list of word objects
 
         // First checks if the dictionary exists
         File dictionaryFile = new File("./lib/dictionary.txt");
@@ -35,14 +38,27 @@ public class DictionaryManager {
         // each line is an element in the array
         String[] dictionaryEntries = fullDictionary.split("\\n");
 
-        List<Word> words = Arrays.stream(dictionaryEntries)
+        ArrayList<Word> words = Arrays.stream(dictionaryEntries)
                 .map(entry -> entry.split(" \\| "))
                 .map(splitEntry -> new Word(splitEntry[0], splitEntry[1], splitEntry[2], splitEntry[3]))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
 
         return words;
     }
 
+    // ============ METHOD TO SAVE DICTIONARY WITH CHANGES ==============
+    public void saveDictionary(ArrayList<Word> dictionaryEntries) throws IOException {
+        // PrintWriter object to clear the text file
+        PrintWriter writer = new PrintWriter("./lib/dictionary.txt");
+        writer.print("");
+        writer.close();
+
+        WordWriter wordWriter = new WordWriter();
+        wordWriter.writeEntries(dictionaryEntries);
+    }
+
+
+    // ============ 1. FIND WORDS ===========
     public void findWord() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the word(s) you would like to find. If more than one, please separate them by commas.");
@@ -75,6 +91,7 @@ public class DictionaryManager {
         }
     }
 
+    // ============ 2. FIND DEFINITIONS ===========
     public void findDefinition() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
@@ -107,6 +124,7 @@ public class DictionaryManager {
         }
     }
 
+    // ============ 3. FIND WORDS BEGINNING WITH... ===========
     public void findStartsWith() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Find words that start with (separate multiple by commas): ");
@@ -138,6 +156,7 @@ public class DictionaryManager {
         }
     }
 
+    // ============ 4. FIND WORDS ENDING WITH... ============
     public void findEndsWith() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Find words that start with (separate multiple by commas): ");
@@ -170,7 +189,7 @@ public class DictionaryManager {
     }
 
 
-    // ============ FIND ALL WORDS CONTAINING... ===========
+    // ============ 5. FIND ALL WORDS CONTAINING... ===========
     public void findWordsContaining() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.");
@@ -202,4 +221,57 @@ public class DictionaryManager {
         }
     }
 
+    // ============ 6. ADD A WORD =============
+    public void addWord() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        // ask for new word
+        System.out.println("Please enter a word to add to the dictionary: ");
+        String wordInput = scanner.nextLine();
+
+        // ask for the word definition
+        System.out.println("Please enter the definition of the provided word: ");
+        String definitionInput = scanner.nextLine();
+
+        // ask for the part of speech
+        System.out.println("Please enter the part of speech of the word: ");
+        String partOfSpeechInput = scanner.nextLine();
+
+        // ask for an example
+        System.out.println("Please enter a sentence using the word: ");
+        String exampleInput = scanner.nextLine();
+
+        // Create a Word object with user inputs
+        Word newWord = new Word(wordInput, definitionInput, partOfSpeechInput, exampleInput);
+
+        // Load dictionary entries
+        ArrayList<Word> dictionaryEntries = loadDictionary();
+
+        // Add new word to array of dictionary entries
+        dictionaryEntries.add(newWord);
+
+        saveDictionary(dictionaryEntries);
+    }
+
+    // ============ 7. DELETE A WORD ==============
+    public void deleteWord() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the word(s) you would like to remove from the dictionary. If more than one, please separate them by commas.");
+        String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
+        String[] wordsToDelete = wordInput.split(","); // turn search into a list of Strings
+
+        // Load dictionary entries
+        List<Word> dictionaryEntries = loadDictionary();
+
+        // This will remove any entries that match any word that are in the array of wordsToDelete.
+        dictionaryEntries.removeIf(entry -> { // remove an entry if...
+            for (String word : wordsToDelete) { // for every word in the list of words to delete...
+                if (entry.getWord().equalsIgnoreCase(word.trim())) { // if the word in the dictionary is the same as the word to delete.
+                    System.out.println("Word '" + entry.getWord() + "' deleted.");
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
 }
