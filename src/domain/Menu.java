@@ -52,19 +52,18 @@ public class Menu {
             switch (choiceInput) {
                 case 1:
                     wordFinder.findWord();
-                    enterToContinue();
                     break;
                 case 2:
-                    //wordFinder.findDefinition();
+                    wordFinder.findDefinition();
                     break;
                 case 3:
-                    //wordFinder.findStartsWith();
+                    wordFinder.findStartsWith();
                     break;
                 case 4:
-                    //wordFinder.findEndsWith();
+                    wordFinder.findEndsWith();
                     break;
                 case 5:
-                    //wordFinder.findSubstring();
+                    wordFinder.findWordsContaining();
                     break;
                 case 6:
                     WordWriter wordWriter = new WordWriter();
@@ -86,6 +85,7 @@ public class Menu {
                     System.out.println("Error: Invalid input. Please try again.");
                     break;
             }
+            enterToContinue();
         }
     }
 }
