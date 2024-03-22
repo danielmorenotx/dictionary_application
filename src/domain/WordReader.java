@@ -21,14 +21,11 @@ public class WordReader implements interfaces.WordReader {
                 wholeDictionary += currentCharacter;
                 character = fileReader.read();
             }
-            System.out.println("Complete Dictionary:");
-            System.out.println(wholeDictionary);
+//            System.out.println("Complete Dictionary:");
+//            System.out.println(wholeDictionary);
             return wholeDictionary;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-    };
-
+    }
 }

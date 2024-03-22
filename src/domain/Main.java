@@ -11,6 +11,7 @@ public class Main {
 
         // Display the menu
         Menu menu = new Menu();
+        menu.enterToContinue();
         menu.menuHandler();
 //
 //        // ========= WORD READER ===========
