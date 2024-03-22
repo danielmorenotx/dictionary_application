@@ -107,62 +107,68 @@ public class DictionaryManager {
         }
     }
 
-//    public void findStartsWith() throws IOException {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Find words that start with: ");
-//        String prefixSearch = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
-//
-//        // Load dictionary entries
-//        List<String[]> dictionaryEntries = loadDictionary();
-//
-//        // Search for words starting with the prefix
-//        List<String[]> entriesWithPrefix = new ArrayList<>(); // creating array list that has words starting with the prefix
-//
-//        for (String[] entry : dictionaryEntries) {
-//            String word = entry[0]; // the word is at index 0 of every list
-//            if (word.toLowerCase().startsWith(prefixSearch.toLowerCase())) {
-//                entriesWithPrefix.add(entry); // add the matching entries to the wordsWithPrefix arrayList
-//            }
-//        }
-//
-//        // Printing matching entries
-//        if (entriesWithPrefix.isEmpty()) { // checks if the arrayList is empty
-//            System.out.println("There are no words starting with '" + prefixSearch + "'.");
-//        } else {
-//            for (String[] entry : entriesWithPrefix) {
-//                System.out.println(String.join(" | ", entry));
-//            }
-//        }
-//    }
-//
-//    public void findEndsWith() throws IOException {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Find words that end with: ");
-//        String suffixSearch = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
-//
-//        // Load dictionary entries
-//        List<String[]> dictionaryEntries = loadDictionary();
-//
-//        // Search for words starting with the prefix
-//        List<String[]> entriesWithSuffix = new ArrayList<>(); // creating array list that has words starting with the prefix
-//
-//        for (String[] entry : dictionaryEntries) {
-//            String word = entry[0]; // the word is at index 0 of every list
-//            if (word.toLowerCase().endsWith(suffixSearch.toLowerCase())) {
-//                entriesWithSuffix.add(entry); // add the matching entries to the wordsWithPrefix arrayList
-//            }
-//        }
-//
-//        // Printing matching entries
-//        if (entriesWithSuffix.isEmpty()) { // checks if the arrayList is empty
-//            System.out.println("There are no words ending with '" + suffixSearch + "'.");
-//        } else {
-//            for (String[] entry : entriesWithSuffix) {
-//                System.out.println(String.join(" | ", entry));
-//            }
-//        }
-//    }
-//
+    public void findStartsWith() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Find words that start with (separate multiple by commas): ");
+        String prefixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
+        String[] prefixSearch = prefixInput.split(",");
+
+        // Load dictionary entries
+        List<Word> dictionaryEntries = loadDictionary();
+
+        // Search every dictionary entry definition for the words in the wordSearch
+        List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
+        for (Word entry : dictionaryEntries) { // for every line in my dictionary...
+            String word = entry.getWord(); // find the word of each entry and
+            for (String searchedWord : prefixSearch) { // for every word in the list of words that are being searched...
+                if (word.toLowerCase().startsWith(searchedWord.toLowerCase().trim())) { // if the word starts with the substring...
+                    matchingEntries.add(entry); // add the entry to the matchingEntries array
+                }
+            }
+        }
+
+        // Print matching entries
+        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
+            System.out.println("No matching words found.");
+        } else {
+            System.out.println("Matching entries:");
+            for (Word entry : matchingEntries) {
+                System.out.println(entry); // prints every entry in the matchingEntries list
+            }
+        }
+    }
+
+    public void findEndsWith() throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Find words that start with (separate multiple by commas): ");
+        String suffixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
+        String[] suffixSearch = suffixInput.split(",");
+
+        // Load dictionary entries
+        List<Word> dictionaryEntries = loadDictionary();
+
+        // Search every dictionary entry definition for the words in the wordSearch
+        List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
+        for (Word entry : dictionaryEntries) { // for every line in my dictionary...
+            String word = entry.getWord(); // find the word of each entry and
+            for (String searchedWord : suffixSearch) { // for every word in the list of words that are being searched...
+                if (word.toLowerCase().endsWith(searchedWord.toLowerCase().trim())) { // if the word ends with the substring...
+                    matchingEntries.add(entry); // add the entry to the matchingEntries array
+                }
+            }
+        }
+
+        // Print matching entries
+        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
+            System.out.println("No matching words found.");
+        } else {
+            System.out.println("Matching entries:");
+            for (Word entry : matchingEntries) {
+                System.out.println(entry); // prints every entry in the matchingEntries list
+            }
+        }
+    }
+
 
     // ============ FIND ALL WORDS CONTAINING... ===========
     public void findWordsContaining() throws IOException {
@@ -177,9 +183,9 @@ public class DictionaryManager {
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
         for (Word entry : dictionaryEntries) { // for every line in my dictionary...
-            String word = entry.getWord(); // finds the definition of each entry and
+            String word = entry.getWord(); // find the word of each entry and
             for (String searchedWord : substringSearch) { // for every word in the list of words that are being searched...
-                if (word.toLowerCase().contains(searchedWord.toLowerCase().trim())) { // if the full definition of an entry contains the word...
+                if (word.toLowerCase().contains(searchedWord.toLowerCase().trim())) { // if the full word of an entry contains the substring...
                     matchingEntries.add(entry); // add the entry to the matchingEntries array
                 }
             }
