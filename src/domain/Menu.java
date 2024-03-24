@@ -7,15 +7,24 @@ public class Menu {
 
     public void enterToContinue() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Press 'Enter' to see the main menu. Press 'Escape' to exit the application.");
-        String continueChoice = scanner.nextLine();
+        boolean continueLoop = true;
 
-        if (continueChoice.equalsIgnoreCase("Escape")) {
-            System.out.println("Exiting application...");
-            System.exit(0);
-        } else {
-            displayMenu();
+        while (continueLoop) {
+            System.out.println("Press 'Enter' to see the main menu. Type 'exit' and hit enter to exit the application.");
+            String continueChoice = scanner.nextLine();
+
+            if (continueChoice.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting application...");
+                System.exit(0);
+                continueLoop = false;
+            } else if (continueChoice.trim().isEmpty()) {
+                displayMenu();
+                continueLoop = false;
+            } else {
+                System.out.println("Invalid Entry. Please try again.");
+            }
         }
+
     }
 
     public void displayMenu() {
@@ -68,20 +77,20 @@ public class Menu {
                 case 6: // Add word
                     dictionaryManager.addWord();
                     break;
-                case 7: // Delete word...
-                    // Delete a word
+                case 7: // Delete word
                     dictionaryManager.deleteWord();
                     break;
                 case 8: // History
+                    dictionaryManager.printHistory();
                     break;
                 case 9: // Creator
-                    System.out.println("This dictionary app was created by Daniel Moreno.");
-                    break;
+                    dictionaryManager.printCreator();
+                    // break;
                 case 10: // Exit
                     System.out.println("Exiting application...");
                     return;
                 default:
-                    System.out.println("Error: Invalid input. Please try again.");
+                    System.out.println("Error: Invalid input. Please try again." + "\n");
                     break;
             }
             enterToContinue();
