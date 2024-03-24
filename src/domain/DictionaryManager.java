@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 public class DictionaryManager {
     private ArrayList<ArrayList<Object>> historyList = new ArrayList<>();
+    private static String noMatches = "No matching words found." + "\n";
+    private static String yesMatches = "Matching entries";
 
     // ======== METHOD TO STORE CONTENT OF DICTIONARY IN AN ARRAY =============
     public ArrayList<Word> loadDictionary() throws IOException { // returns list of word objects
@@ -89,11 +91,11 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) {
-            System.out.println("No matching words found." + "\n");
-            logHistory.add("No matching words found." + "\n");
+            System.out.println(noMatches);
+            logHistory.add(noMatches);
         } else {
-            System.out.println("Matching entries:");
-            logHistory.add("Matching entries:");
+            System.out.println(yesMatches);
+            logHistory.add(yesMatches);
             for (Word entry : matchingEntries) {
                 System.out.println(entry);
                 logHistory.add(entry);
@@ -135,11 +137,11 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching definitions found." + "\n");
-            logHistory.add("No matching definitions found." + "\n");
+            System.out.println(noMatches);
+            logHistory.add(noMatches);
         } else {
-            System.out.println("Matching entries:");
-            logHistory.add("Matching entries:");
+            System.out.println(yesMatches);
+            logHistory.add(yesMatches);
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
                 logHistory.add(entry);
@@ -153,6 +155,12 @@ public class DictionaryManager {
 
     // ============ 3. FIND WORDS BEGINNING WITH... ===========
     public void findStartsWith() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Find words that start with (separate multiple by commas): ";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Find words that start with (separate multiple by commas): ");
         String prefixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
@@ -174,20 +182,33 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching words found." + "\n");
+            System.out.println(noMatches);
+            logHistory.add(noMatches);
         } else {
-            System.out.println("Matching entries:");
+            System.out.println(yesMatches);
+            logHistory.add(yesMatches);
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
+                logHistory.add(entry);
             }
         }
+
         System.out.println();
+
+        // add to history list
+        addToHistoryList(logHistory);
     }
 
     // ============ 4. FIND WORDS ENDING WITH... ============
     public void findEndsWith() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Find words that end with (separate multiple by commas): ";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Find words that start with (separate multiple by commas): ");
+        System.out.println("Find words that end with (separate multiple by commas): ");
         String suffixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
         String[] suffixSearch = suffixInput.split(",");
 
@@ -207,19 +228,32 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching words found." + "\n");
+            System.out.println(noMatches);
+            logHistory.add(noMatches);
         } else {
-            System.out.println("Matching entries:");
+            System.out.println(yesMatches);
+            logHistory.add(yesMatches);
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
+                logHistory.add(entry);
             }
         }
+
         System.out.println();
+
+        // add to history list
+        addToHistoryList(logHistory);
     }
 
 
     // ============ 5. FIND ALL WORDS CONTAINING... ===========
     public void findWordsContaining() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.");
         String substringInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
@@ -241,18 +275,28 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching words found." + "\n");
+            System.out.println(noMatches);
+            logHistory.add(noMatches);
         } else {
-            System.out.println("Matching entries:");
+            System.out.println(yesMatches);
+            logHistory.add(yesMatches);
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
             }
         }
         System.out.println();
+
+        addToHistoryList(logHistory);
     }
 
     // ============ 6. ADD A WORD =============
     public void addWord() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Word added to dictionary:";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
 
         // ask for new word
@@ -281,10 +325,20 @@ public class DictionaryManager {
         dictionaryEntries.add(newWord);
 
         saveDictionary(dictionaryEntries);
+
+        // add to history
+        logHistory.add(newWord);
+        addToHistoryList(logHistory);
     }
 
     // ============ 7. DELETE A WORD ==============
     public void deleteWord() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Word(s) deleted from dictionary:";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the word(s) you would like to remove from the dictionary. If more than one, please separate them by commas.");
         String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
@@ -298,6 +352,7 @@ public class DictionaryManager {
             for (String word : wordsToDelete) { // for every word in the list of words to delete...
                 if (entry.getWord().equalsIgnoreCase(word.trim())) { // if the word in the dictionary is the same as the word to delete.
                     System.out.println("Word '" + entry.getWord() + "' deleted.");
+                    logHistory.add("Word '" + entry.getWord() + "' deleted.");
                     return true;
                 }
             }
@@ -305,6 +360,9 @@ public class DictionaryManager {
         });
         System.out.println();
         saveDictionary(dictionaryEntries);
+
+        // add to history
+        addToHistoryList(logHistory);
     }
 
     // ============ 8. FIND HISTORY ==============
@@ -321,6 +379,14 @@ public class DictionaryManager {
 
     // ============ 9. CREATOR ==============
     public void printCreator() {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+
+        // ===== Main section =====
         System.out.println("\n" + "This dictionary app was created by Daniel Moreno." + "\n");
+        logHistory.add("\n" + "This dictionary app was created by Daniel Moreno." + "\n");
+
+        // add to history
+        addToHistoryList(logHistory);
     }
 }
