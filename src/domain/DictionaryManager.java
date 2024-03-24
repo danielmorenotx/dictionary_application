@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DictionaryManager {
-
+    private ArrayList<ArrayList<Object>> historyList = new ArrayList<>();
 
     // ======== METHOD TO STORE CONTENT OF DICTIONARY IN AN ARRAY =============
     public ArrayList<Word> loadDictionary() throws IOException { // returns list of word objects
@@ -21,9 +21,9 @@ public class DictionaryManager {
         if (!dictionaryFile.exists()) {
             try {
                 if (dictionaryFile.createNewFile()) {
-                    System.out.println("Successfully created a new dictionary");
+                    System.out.println("Successfully created a new dictionary" + "\n");
                 } else {
-                    System.out.println("Could not create a new dictionary :(");
+                    System.out.println("Could not create a new dictionary :(" + "\n");
                 }
             } catch (IOException e) {
                 throw new RuntimeException("Error: " + e.getMessage());
@@ -60,10 +60,17 @@ public class DictionaryManager {
 
     // ============ 1. FIND WORDS ===========
     public void findWord() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Please enter the word(s) you would like to find. If more than one, please separate them by commas.";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the word(s) you would like to find. If more than one, please separate them by commas.");
         String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] wordSearch = wordInput.split(","); // turn search into a list of Strings
+        logHistory.add(wordSearch);
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -82,17 +89,30 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) {
-            System.out.println("No matching words found.");
+            System.out.println("No matching words found." + "\n");
+            logHistory.add("No matching words found." + "\n");
         } else {
             System.out.println("Matching entries:");
+            logHistory.add("Matching entries:");
             for (Word entry : matchingEntries) {
                 System.out.println(entry);
+                logHistory.add(entry);
             }
         }
+        System.out.println();
+
+        // add to history list
+        addToHistoryList(logHistory);
     }
 
     // ============ 2. FIND DEFINITIONS ===========
     public void findDefinition() throws IOException {
+        // history section
+        ArrayList<Object> logHistory = new ArrayList<>();
+        String userChoice = "Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.";
+        logHistory.add(userChoice);
+
+        // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
         String definitionInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
@@ -115,13 +135,20 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching definitions found.");
+            System.out.println("No matching definitions found." + "\n");
+            logHistory.add("No matching definitions found." + "\n");
         } else {
             System.out.println("Matching entries:");
+            logHistory.add("Matching entries:");
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
+                logHistory.add(entry);
             }
         }
+        System.out.println();
+
+        // add to history list
+        addToHistoryList(logHistory);
     }
 
     // ============ 3. FIND WORDS BEGINNING WITH... ===========
@@ -147,13 +174,14 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching words found.");
+            System.out.println("No matching words found." + "\n");
         } else {
             System.out.println("Matching entries:");
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
             }
         }
+        System.out.println();
     }
 
     // ============ 4. FIND WORDS ENDING WITH... ============
@@ -179,13 +207,14 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching words found.");
+            System.out.println("No matching words found." + "\n");
         } else {
             System.out.println("Matching entries:");
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
             }
         }
+        System.out.println();
     }
 
 
@@ -212,13 +241,14 @@ public class DictionaryManager {
 
         // Print matching entries
         if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println("No matching words found.");
+            System.out.println("No matching words found." + "\n");
         } else {
             System.out.println("Matching entries:");
             for (Word entry : matchingEntries) {
                 System.out.println(entry); // prints every entry in the matchingEntries list
             }
         }
+        System.out.println();
     }
 
     // ============ 6. ADD A WORD =============
@@ -261,7 +291,7 @@ public class DictionaryManager {
         String[] wordsToDelete = wordInput.split(","); // turn search into a list of Strings
 
         // Load dictionary entries
-        List<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = loadDictionary();
 
         // This will remove any entries that match any word that are in the array of wordsToDelete.
         dictionaryEntries.removeIf(entry -> { // remove an entry if...
@@ -273,5 +303,24 @@ public class DictionaryManager {
             }
             return false;
         });
+        System.out.println();
+        saveDictionary(dictionaryEntries);
+    }
+
+    // ============ 8. FIND HISTORY ==============
+    private void addToHistoryList(ArrayList<Object> history) {
+        historyList.add(history);
+    }
+
+    public void printHistory() {
+        System.out.println("============= HISTORY =============");
+        for (Object historyObject: historyList) {
+            System.out.println(historyObject.toString());
+        }
+    }
+
+    // ============ 9. CREATOR ==============
+    public void printCreator() {
+        System.out.println("\n" + "This dictionary app was created by Daniel Moreno." + "\n");
     }
 }
