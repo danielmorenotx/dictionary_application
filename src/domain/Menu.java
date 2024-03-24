@@ -85,7 +85,7 @@ public class Menu {
                     break;
                 case 9: // Creator
                     dictionaryManager.printCreator();
-                    // break;
+                    break;
                 case 10: // Exit
                     System.out.println("Exiting application...");
                     return;
