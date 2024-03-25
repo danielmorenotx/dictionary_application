@@ -70,7 +70,7 @@ public class DictionaryManager {
         System.out.println("Please enter the word(s) you would like to find. If more than one, please separate them by commas.");
         String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] wordSearch = wordInput.split(","); // turn search into a list of Strings
-        logHistory.add("Find word(s): " + Arrays.toString(wordSearch));
+        logHistory.add("Find word(s): " + String.join(", ", wordSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -115,7 +115,7 @@ public class DictionaryManager {
         System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
         String definitionInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] definitionSearch = definitionInput.split(",");; // creating an array to hold the words in the search
-        logHistory.add("Search definitions for: " + Arrays.toString(definitionSearch));
+        logHistory.add("Search definitions for: " + String.join(", ", definitionSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -160,7 +160,7 @@ public class DictionaryManager {
         System.out.println("Find words that start with (separate multiple by commas): ");
         String prefixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
         String[] prefixSearch = prefixInput.split(",");
-        logHistory.add("Find word(s) starting with: " + Arrays.toString(prefixSearch));
+        logHistory.add("Find word(s) starting with: " + String.join(", ", prefixSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -205,7 +205,7 @@ public class DictionaryManager {
         System.out.println("Find words that end with (separate multiple by commas): ");
         String suffixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
         String[] suffixSearch = suffixInput.split(",");
-        logHistory.add("Find word(s) ending with: " + Arrays.toString(suffixSearch));
+        logHistory.add("Find word(s) ending with: " + String.join(", ", suffixSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -251,7 +251,7 @@ public class DictionaryManager {
         System.out.println("Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.");
         String substringInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] substringSearch = substringInput.split(",");; // creating an array to hold the words in the search
-        logHistory.add("Find word(s) containing: " + Arrays.toString(substringSearch));
+        logHistory.add("Find word(s) containing: " + String.join(", ", substringSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -335,7 +335,7 @@ public class DictionaryManager {
         System.out.println("Please enter the word(s) you would like to remove from the dictionary. If more than one, please separate them by commas.");
         String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] wordsToDelete = wordInput.split(","); // turn search into a list of Strings
-        logHistory.add("Word(s) deleted: " + Arrays.toString(wordsToDelete));
+        logHistory.add("Word(s) deleted: " + String.join(", ", wordsToDelete));
 
 
         // Load dictionary entries

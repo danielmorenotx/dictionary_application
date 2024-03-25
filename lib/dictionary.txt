@@ -10,3 +10,4 @@ television | electronic device to watch media | noun | I watched the television.
 fan | somebody who likes something | noun | I am a fan of the show.
 run | the act of speedily moving forward using your legs | verb | I am going to run very fast.
 clock | electronic device that displays the time. | noun | What time does the clock say?
+numeral | a symbol representing a number | noun | Numbers are repesented by numerals.
