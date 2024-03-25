@@ -64,15 +64,13 @@ public class DictionaryManager {
     public void findWord() throws IOException {
         // history section
         ArrayList<Object> logHistory = new ArrayList<>();
-        String userChoice = "Please enter the word(s) you would like to find. If more than one, please separate them by commas.";
-        logHistory.add(userChoice);
 
         // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the word(s) you would like to find. If more than one, please separate them by commas.");
         String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] wordSearch = wordInput.split(","); // turn search into a list of Strings
-        logHistory.add(wordSearch);
+        logHistory.add("Find word(s): " + Arrays.toString(wordSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -111,14 +109,13 @@ public class DictionaryManager {
     public void findDefinition() throws IOException {
         // history section
         ArrayList<Object> logHistory = new ArrayList<>();
-        String userChoice = "Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.";
-        logHistory.add(userChoice);
 
         // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
         String definitionInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] definitionSearch = definitionInput.split(",");; // creating an array to hold the words in the search
+        logHistory.add("Search definitions for: " + Arrays.toString(definitionSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -157,14 +154,13 @@ public class DictionaryManager {
     public void findStartsWith() throws IOException {
         // history section
         ArrayList<Object> logHistory = new ArrayList<>();
-        String userChoice = "Find words that start with (separate multiple by commas): ";
-        logHistory.add(userChoice);
 
         // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Find words that start with (separate multiple by commas): ");
         String prefixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
         String[] prefixSearch = prefixInput.split(",");
+        logHistory.add("Find word(s) starting with: " + Arrays.toString(prefixSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -203,14 +199,13 @@ public class DictionaryManager {
     public void findEndsWith() throws IOException {
         // history section
         ArrayList<Object> logHistory = new ArrayList<>();
-        String userChoice = "Find words that end with (separate multiple by commas): ";
-        logHistory.add(userChoice);
 
         // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Find words that end with (separate multiple by commas): ");
         String suffixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
         String[] suffixSearch = suffixInput.split(",");
+        logHistory.add("Find word(s) ending with: " + Arrays.toString(suffixSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -250,14 +245,13 @@ public class DictionaryManager {
     public void findWordsContaining() throws IOException {
         // history section
         ArrayList<Object> logHistory = new ArrayList<>();
-        String userChoice = "Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.";
-        logHistory.add(userChoice);
 
         // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.");
         String substringInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] substringSearch = substringInput.split(",");; // creating an array to hold the words in the search
+        logHistory.add("Find word(s) containing: " + Arrays.toString(substringSearch));
 
         // Load dictionary entries
         List<Word> dictionaryEntries = loadDictionary();
@@ -327,7 +321,7 @@ public class DictionaryManager {
         saveDictionary(dictionaryEntries);
 
         // add to history
-        logHistory.add(newWord);
+        logHistory.add(newWord); // adding the word info to teh array
         addToHistoryList(logHistory);
     }
 
@@ -335,14 +329,14 @@ public class DictionaryManager {
     public void deleteWord() throws IOException {
         // history section
         ArrayList<Object> logHistory = new ArrayList<>();
-        String userChoice = "Word(s) deleted from dictionary:";
-        logHistory.add(userChoice);
 
         // ===== Main section =====
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the word(s) you would like to remove from the dictionary. If more than one, please separate them by commas.");
         String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
         String[] wordsToDelete = wordInput.split(","); // turn search into a list of Strings
+        logHistory.add("Word(s) deleted: " + Arrays.toString(wordsToDelete));
+
 
         // Load dictionary entries
         ArrayList<Word> dictionaryEntries = loadDictionary();
@@ -372,21 +366,17 @@ public class DictionaryManager {
 
     public void printHistory() {
         System.out.println("============= HISTORY =============");
-        for (Object historyObject: historyList) {
-            System.out.println(historyObject.toString());
+        for (ArrayList<Object> historyObject: historyList) {
+            for (Object element : historyObject) {
+                System.out.println(element);
+            }
+            System.out.println();
         }
     }
 
     // ============ 9. CREATOR ==============
     public void printCreator() {
-        // history section
-        ArrayList<Object> logHistory = new ArrayList<>();
 
-        // ===== Main section =====
         System.out.println("\n" + "This dictionary app was created by Daniel Moreno." + "\n");
-        logHistory.add("\n" + "This dictionary app was created by Daniel Moreno." + "\n");
-
-        // add to history
-        addToHistoryList(logHistory);
     }
 }

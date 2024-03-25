@@ -6,3 +6,7 @@ letter | a character of an alphabet | noun | She wanted to fight me. I said lett
 blanket | a cloth covering designed to be large enough to cover a human to keep him warm | noun | I need the blanket to stay warm.
 banana | the fruit of a banana tree | noun | I like to eat bananas.
 dance | move your body to a song | verb | I like to dance.
+television | electronic device to watch media | noun | I watched the television.
+fan | somebody who likes something | noun | I am a fan of the show.
+run | the act of speedily moving forward using your legs | verb | I am going to run very fast.
+clock | electronic device that displays the time. | noun | What time does the clock say?
