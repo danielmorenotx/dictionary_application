@@ -1,13 +1,14 @@
-peach | fruit of the peach tree | noun | The peach is rotten.
 kiwi | the fruit of a kiwi tree | noun | I cut the kiwi in half.
-test | an exam | noun | I am failing this test
 name | a word given to address a thing | noun | What is my name?
 letter | a character of an alphabet | noun | She wanted to fight me. I said letter.
 blanket | a cloth covering designed to be large enough to cover a human to keep him warm | noun | I need the blanket to stay warm.
 banana | the fruit of a banana tree | noun | I like to eat bananas.
 dance | move your body to a song | verb | I like to dance.
 television | electronic device to watch media | noun | I watched the television.
-fan | somebody who likes something | noun | I am a fan of the show.
 run | the act of speedily moving forward using your legs | verb | I am going to run very fast.
 clock | electronic device that displays the time. | noun | What time does the clock say?
-numeral | a symbol representing a number | noun | Numbers are repesented by numerals.
+numeral | a symbol representing a number | noun | Numbers are represented by numerals.
+coffee | yummy | noun | I drank coffee
+peach | fruit of a peach tree | noun | the peach was rotten.
+pizza | an italian dish that is delicious | noun | I ate the pizza
+tomato | the fruit of a tomato plant | noun | Tomatoes are actually fruits, not vegetables.
