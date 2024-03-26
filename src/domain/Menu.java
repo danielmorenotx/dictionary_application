@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public void enterToContinue() {
+    public void enterToContinue() throws IOException {
         Scanner scanner = new Scanner(System.in);
         boolean continueLoop = true;
 
@@ -16,7 +16,6 @@ public class Menu {
             if (continueChoice.equalsIgnoreCase("exit")) {
                 System.out.println("Exiting application...");
                 System.exit(0);
-                continueLoop = false;
             } else if (continueChoice.trim().isEmpty()) {
                 displayMenu();
                 continueLoop = false;
@@ -27,7 +26,7 @@ public class Menu {
 
     }
 
-    public void displayMenu() {
+    public void displayMenu() throws IOException {
         System.out.println("****************************************************\n" +
                 "Welcome. Please pick a number of one of the following options:\n" +
                 "\n" +
@@ -42,6 +41,7 @@ public class Menu {
                 "9. Creator\n" +
                 "10. Exit\n" +
                 "****************************************************");
+        menuHandler();
     }
 
     public void menuHandler() throws IOException {
