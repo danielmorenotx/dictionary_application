@@ -8,10 +8,12 @@ import java.util.Scanner;
 
 public class WordWriter implements interfaces.WordWriter {
 
+    private static final String filePath = "./lib/dictionary.txt";
+
     @Override
     public void writeEntries(List<Word> dictionaryEntries) throws IOException {
         try {
-            FileWriter fileWriter = new FileWriter("./lib/dictionary.txt", true);
+            FileWriter fileWriter = new FileWriter(filePath, false);
 
             for (Word entry : dictionaryEntries) {
                 fileWriter.write(entry.getWord() + " | " +
