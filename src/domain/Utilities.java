@@ -10,9 +10,9 @@ public class Utilities {
         return definitionOrExample.split(" ").length > 2; // checks if the definition has more than two words
     }
 
-    public static String partOfSpeechValidator(String input) {
+    public static String convertPartOfSpeechMenuChoice(String menuChoice) {
 
-        switch (input) {
+        switch (menuChoice) {
             case "1":
                 return "noun";
             case "2":

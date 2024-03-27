@@ -11,22 +11,21 @@ import static domain.Menu.*;
 
 public class DictionaryManager {
     private ArrayList<ArrayList<String>> historyList = new ArrayList<>();
-    private ArrayList<Word> dictionaryEntries; // ArrayList to store entries once loaded
+    private static ArrayList<Word> dictionaryEntries; // ArrayList to store entries once loaded
 
     // ======== METHOD TO STORE CONTENT OF DICTIONARY IN AN ARRAY =============
-    public ArrayList<Word> loadDictionary() throws IOException { // returns list of word objects
-//        throw new IOException();
-        // First checks if the dictionary exists
+    public static ArrayList<Word> loadDictionary() throws IOException { // returns list of word objects
+//      First checks if the dictionary exists
         File dictionaryFile = new File("./lib/dictionary.txt");
-        if (!dictionaryFile.exists()) {
-            if (dictionaryFile.createNewFile()) {
+        if (!dictionaryFile.exists()) { // checks if the file DOES NOT exist. If it does, this block is skipped.
+            if (dictionaryFile.createNewFile()) { // will throw exception if file does not exist and cannot be created
                 System.out.println("Successfully created a new dictionary!" + "\n");
             } else {
                 System.out.println("Dictionary already exists!" + "\n"); // will return false if it exists already
             }
         }
 
-        // Load dictionary from the file
+        // Create string from contents of dictionary
         WordReader wordReader = new domain.WordReader();
         String fullDictionary = wordReader.readEntries("./lib/dictionary.txt"); // took what the method returned and assigned to a String variable
 
@@ -34,18 +33,19 @@ public class DictionaryManager {
         // each line is an element in the array
         String[] dictionaryEntries = fullDictionary.split("\\n");
 
+        // turns to a stream, then splits every element into 4 parts at the | symbol, then creates a word object from those
         ArrayList<Word> words = Arrays.stream(dictionaryEntries)
                 .map(entry -> entry.split(" \\| "))
                 .map(splitEntry -> new Word(splitEntry[0], splitEntry[1], splitEntry[2], splitEntry[3]))
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        return words;
+        return words; // ArrayList of Word objects
     }
 
     // get loaded dictionary
-    private ArrayList<Word> getDictionary() throws IOException {
-        if (dictionaryEntries == null) { // if dictionary has not been given a value...
-            dictionaryEntries = loadDictionary(); // call loadDictionary method to check if file exists and read content into it
+    public static ArrayList<Word> getDictionary() throws IOException {
+        if (dictionaryEntries == null) { // if dictionary has not been given a value (has not been given the loadDictionary value)...
+            dictionaryEntries = loadDictionary(); // give dictionaryEntries the value of the ArrayList of Word objects created in loadDictionary
         }
         return dictionaryEntries; // return the content of the dictionary as an ArrayList
     }
@@ -86,9 +86,6 @@ public class DictionaryManager {
         ArrayList<String> logHistory = new ArrayList<>();
         logHistory.add("Searched definitions for: " + String.join(", ", wordOrPhrase));
 
-        // Load dictionary entries
-        ArrayList<Word> dictionaryEntries = getDictionary();
-
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
 
@@ -115,9 +112,6 @@ public class DictionaryManager {
         ArrayList<String> logHistory = new ArrayList<>();
         logHistory.add("Find word(s) starting with: " + String.join(", ", prefixSearch));
 
-        // Load dictionary entries
-        ArrayList<Word> dictionaryEntries = getDictionary();
-
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
         for (Word entry : dictionaryEntries) { // for every line in my dictionary...
@@ -142,9 +136,6 @@ public class DictionaryManager {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
         logHistory.add("Find word(s) ending with: " + String.join(", ", suffixSearch));
-
-        // Load dictionary entries
-        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
@@ -171,9 +162,6 @@ public class DictionaryManager {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
         logHistory.add("Find word(s) containing: " + String.join(", ", substringSearch));
-
-        // Load dictionary entries
-        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
@@ -283,8 +271,4 @@ public class DictionaryManager {
         }
     }
 
-    // ============ 9. CREATOR ==============
-    public void printCreator() {
-        System.out.println("\n" + "This dictionary app was created by Daniel Moreno." + "\n");
-    }
 }

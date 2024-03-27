@@ -2,25 +2,12 @@ package domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
     static Scanner scanner = new Scanner(System.in);
-
-    public void enterToContinue() throws IOException {
-        System.out.println("Press 'Enter' to see the main menu. Type 'exit' and hit enter to exit the application.");
-        String continueChoice = scanner.nextLine();
-
-        if (continueChoice.equalsIgnoreCase("exit")) {
-            System.out.println("Exiting application...");
-            System.exit(0);
-        } else if (continueChoice.trim().isEmpty()) {
-            displayMenu();
-        }
-
-
-    }
 
     public void displayMenu() throws IOException {
         DictionaryManager dictionaryManager = new DictionaryManager();
@@ -28,27 +15,29 @@ public class Menu {
         boolean continueLoop = true;
 
         while (continueLoop) {
-            System.out.println("****************************************************\n" +
-                    "Welcome. Please pick a number of one of the following options:\n" +
-                    "\n" +
-                    "1. Find a word(s)\n" +
-                    "2. Find words by definition\n" +
-                    "3. Find all words that start with -\n" +
-                    "4. Find all words that end with -\n" +
-                    "5. Find all words containing -\n" +
-                    "6. Add a word\n" +
-                    "7. Delete a word\n" +
-                    "8. History\n" +
-                    "9. Creator\n" +
-                    "10. Exit\n" +
-                    "****************************************************");
+            System.out.println("""
+                    ****************************************************
+                    Welcome. Please pick a number of one of the following options:
+
+                    1. Find a word(s)
+                    2. Find words by definition
+                    3. Find all words that start with -
+                    4. Find all words that end with -
+                    5. Find all words containing -
+                    6. Add a word
+                    7. Delete a word
+                    8. History
+                    9. Creator
+                    10. Exit
+                    ****************************************************""");
 
             int choiceInput;
             try {
                 choiceInput = scanner.nextInt();
                 scanner.nextLine();
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please ensure your input is a number");
+                scanner.nextLine(); // Consume the invalid input if it is a string
                 continue; // starts from beginning
             }
 
@@ -93,15 +82,19 @@ public class Menu {
                     dictionaryManager.printHistory();
                     break;
                 case 9: // Creator
-                    dictionaryManager.printCreator();
+                    System.out.println("""
+
+                    This dictionary app was created by Daniel Moreno.
+                    """);
                     break;
                 case 10: // Exit
                     System.out.println("Exiting application...");
-                    return;
+                    System.exit(0);
                 default:
                     System.out.println("Error: Invalid input. Please try again." + "\n");
                     break;
             }
+
             System.out.println("Press 'Enter' to see the main menu. Type 'exit' and hit enter to exit the application.");
             String continueChoice = scanner.nextLine();
 
@@ -112,7 +105,6 @@ public class Menu {
                 continueLoop = true;
             } else {
                 System.out.println("Invalid entry. Please try again");
-                continueLoop = true;
             }
         }
     }

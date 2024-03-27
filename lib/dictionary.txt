@@ -8,7 +8,7 @@ television | electronic device to watch media | noun | I watched the television.
 run | the act of speedily moving forward using your legs | verb | I am going to run very fast.
 clock | electronic device that displays the time. | noun | What time does the clock say?
 numeral | a symbol representing a number | noun | Numbers are represented by numerals.
-coffee | yummy | noun | I drank coffee
 peach | fruit of a peach tree | noun | the peach was rotten.
 pizza | an italian dish that is delicious | noun | I ate the pizza
 tomato | the fruit of a tomato plant | noun | Tomatoes are actually fruits, not vegetables.
+speaker | a person who says words | noun | He is a good public speaker
