@@ -3,32 +3,26 @@ package domain;
 import interfaces.WordReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static domain.Menu.*;
+
 public class DictionaryManager {
     private ArrayList<ArrayList<String>> historyList = new ArrayList<>();
-    private static String noMatches = "No matching words found." + "\n";
-    private static String yesMatches = "Matching entries";
+    private ArrayList<Word> dictionaryEntries; // ArrayList to store entries once loaded
 
     // ======== METHOD TO STORE CONTENT OF DICTIONARY IN AN ARRAY =============
     public ArrayList<Word> loadDictionary() throws IOException { // returns list of word objects
-
+//        throw new IOException();
         // First checks if the dictionary exists
         File dictionaryFile = new File("./lib/dictionary.txt");
         if (!dictionaryFile.exists()) {
-            try {
-                if (dictionaryFile.createNewFile()) {
-                    System.out.println("Successfully created a new dictionary" + "\n");
-                } else {
-                    System.out.println("Could not create a new dictionary :(" + "\n");
-                }
-            } catch (IOException e) {
-                throw new RuntimeException("Error: " + e.getMessage());
+            if (dictionaryFile.createNewFile()) {
+                System.out.println("Successfully created a new dictionary!" + "\n");
+            } else {
+                System.out.println("Dictionary already exists!" + "\n"); // will return false if it exists already
             }
         }
 
@@ -48,20 +42,23 @@ public class DictionaryManager {
         return words;
     }
 
+    // get loaded dictionary
+    private ArrayList<Word> getDictionary() throws IOException {
+        if (dictionaryEntries == null) { // if dictionary has not been given a value...
+            dictionaryEntries = loadDictionary(); // call loadDictionary method to check if file exists and read content into it
+        }
+        return dictionaryEntries; // return the content of the dictionary as an ArrayList
+    }
+
+
     // ============ 1. FIND WORDS ===========
-    public void findWord() throws IOException {
+    public void findWord(String[] wordSearch) throws IOException {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
-
-        // ===== Main section =====
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the word(s) you would like to find. If more than one, please separate them by commas.");
-        String wordInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
-        String[] wordSearch = wordInput.split(","); // turn search into a list of Strings
-        logHistory.add("Find word(s): " + String.join(", ", wordSearch));
+        logHistory.add("Searched word(s): " + String.join(", ", wordSearch));
 
         // Load dictionary entries
-        List<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry for the words  in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
@@ -75,83 +72,51 @@ public class DictionaryManager {
             }
         }
 
-        // Print matching entries
-        if (matchingEntries.isEmpty()) {
-            System.out.println(noMatches);
-            logHistory.add(noMatches);
-        } else {
-            System.out.println(yesMatches);
-            logHistory.add(yesMatches);
-            for (Word entry : matchingEntries) {
-                System.out.println(entry);
-                logHistory.add(entry.toString());
-            }
-        }
-        System.out.println();
+        // Print matching entries, log results
+        System.out.println(Menu.printMatchingEntries(matchingEntries) + "\n");
 
         // add to history list
+        logHistory.add(Menu.printMatchingEntries(matchingEntries));
         addToHistoryList(logHistory);
     }
 
     // ============ 2. FIND DEFINITIONS ===========
-    public void findDefinition() throws IOException {
+    public void findDefinition(String[] wordOrPhrase) throws IOException {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
-
-        // ===== Main section =====
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter word(s) you would like to find in definitions. If more than one, please separate them by commas.");
-        String definitionInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
-        String[] definitionSearch = definitionInput.split(",");; // creating an array to hold the words in the search
-        logHistory.add("Search definitions for: " + String.join(", ", definitionSearch));
+        logHistory.add("Searched definitions for: " + String.join(", ", wordOrPhrase));
 
         // Load dictionary entries
-        List<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
 
         for (Word entry : dictionaryEntries) { // for every line in my dictionary...
             String definition = entry.getDefinition(); // finds the definition of each entry and
-            for (String searchedWord : definitionSearch) { // for every word in the list of words that are being searched...
+            for (String searchedWord : wordOrPhrase) { // for every word in the list of words that are being searched...
                 if (definition.toLowerCase().contains(searchedWord)) { // if the full definition of an entry contains the word...
                     matchingEntries.add(entry); // add the entry to the matchingEntries array
                 }
             }
         }
 
-        // Print matching entries
-        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println(noMatches);
-            logHistory.add(noMatches);
-        } else {
-            System.out.println(yesMatches);
-            logHistory.add(yesMatches);
-            for (Word entry : matchingEntries) {
-                System.out.println(entry); // prints every entry in the matchingEntries list
-                logHistory.add(entry.toString());
-            }
-        }
-        System.out.println();
+        // Print matching entries, log results
+        System.out.println(Menu.printMatchingEntries(matchingEntries) + "\n");
 
         // add to history list
+        logHistory.add(Menu.printMatchingEntries(matchingEntries));
         addToHistoryList(logHistory);
     }
 
     // ============ 3. FIND WORDS BEGINNING WITH... ===========
-    public void findStartsWith() throws IOException {
+    public void findStartsWith(String[] prefixSearch) throws IOException {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
-
-        // ===== Main section =====
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Find words that start with (separate multiple by commas): ");
-        String prefixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
-        String[] prefixSearch = prefixInput.split(",");
         logHistory.add("Find word(s) starting with: " + String.join(", ", prefixSearch));
 
         // Load dictionary entries
-        List<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
@@ -164,39 +129,22 @@ public class DictionaryManager {
             }
         }
 
-        // Print matching entries
-        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println(noMatches);
-            logHistory.add(noMatches);
-        } else {
-            System.out.println(yesMatches);
-            logHistory.add(yesMatches);
-            for (Word entry : matchingEntries) {
-                System.out.println(entry); // prints every entry in the matchingEntries list
-                logHistory.add(entry.toString());
-            }
-        }
-
-        System.out.println();
+        // Print matching entries, log results
+        System.out.println(Menu.printMatchingEntries(matchingEntries) + "\n");
 
         // add to history list
+        logHistory.add(Menu.printMatchingEntries(matchingEntries));
         addToHistoryList(logHistory);
     }
 
     // ============ 4. FIND WORDS ENDING WITH... ============
-    public void findEndsWith() throws IOException {
+    public void findEndsWith(String[] suffixSearch) throws IOException {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
-
-        // ===== Main section =====
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Find words that end with (separate multiple by commas): ");
-        String suffixInput = scanner.nextLine(); // trim whatever input so it has no trailing spaces
-        String[] suffixSearch = suffixInput.split(",");
         logHistory.add("Find word(s) ending with: " + String.join(", ", suffixSearch));
 
         // Load dictionary entries
-        List<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
@@ -209,40 +157,23 @@ public class DictionaryManager {
             }
         }
 
-        // Print matching entries
-        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println(noMatches);
-            logHistory.add(noMatches);
-        } else {
-            System.out.println(yesMatches);
-            logHistory.add(yesMatches);
-            for (Word entry : matchingEntries) {
-                System.out.println(entry); // prints every entry in the matchingEntries list
-                logHistory.add(entry.toString());
-            }
-        }
-
-        System.out.println();
+        // Print matching entries, log results
+        System.out.println(Menu.printMatchingEntries(matchingEntries) + "\n");
 
         // add to history list
+        logHistory.add(Menu.printMatchingEntries(matchingEntries));
         addToHistoryList(logHistory);
     }
 
 
     // ============ 5. FIND ALL WORDS CONTAINING... ===========
-    public void findWordsContaining() throws IOException {
+    public void findWordsContaining(String[] substringSearch) throws IOException {
         // history section
         ArrayList<String> logHistory = new ArrayList<>();
-
-        // ===== Main section =====
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter the substring(s) you would like to find in a word. If more than one, please separate them by commas.");
-        String substringInput = scanner.nextLine().trim(); // trim whatever input so it has no trailing spaces
-        String[] substringSearch = substringInput.split(",");; // creating an array to hold the words in the search
         logHistory.add("Find word(s) containing: " + String.join(", ", substringSearch));
 
         // Load dictionary entries
-        List<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // Search every dictionary entry definition for the words in the wordSearch
         List<Word> matchingEntries = new ArrayList<>(); // empty list to hold matching entries
@@ -255,19 +186,11 @@ public class DictionaryManager {
             }
         }
 
-        // Print matching entries
-        if (matchingEntries.isEmpty()) { // checks if matchingEntries is empty
-            System.out.println(noMatches);
-            logHistory.add(noMatches);
-        } else {
-            System.out.println(yesMatches);
-            logHistory.add(yesMatches);
-            for (Word entry : matchingEntries) {
-                System.out.println(entry); // prints every entry in the matchingEntries list
-            }
-        }
-        System.out.println();
+        // Print matching entries, log results
+        System.out.println(Menu.printMatchingEntries(matchingEntries) + "\n");
 
+        // add to history list
+        logHistory.add(Menu.printMatchingEntries(matchingEntries));
         addToHistoryList(logHistory);
     }
 
@@ -285,83 +208,23 @@ public class DictionaryManager {
 
         // Create a Word object with user inputs
         while (continueLoop) {
-            String wordInput;
-            String definitionInput;
-            String partOfSpeechInput;
-            String exampleInput;
+            String wordInput = promptNewWord();
+            String definitionInput = promptNewDefinition();
+            String partOfSpeechInput = promptNewPartOfSpeech();
+            String exampleInput = promptNewExample();
 
-            while (true) {
-                System.out.println("Please enter a word to add to the dictionary:");
-                wordInput = scanner.nextLine().trim();
-                if (Utilities.isValidWord(wordInput)) { // if returns true the word is valid
-                    System.out.println("New word to be added: " + wordInput);
-                    break; // Exit the loop if the word is valid
-                } else {
-                    System.out.println("Invalid word. Please enter a word containing only letters.");
-                }
-            }
-
-            // ask for the word definition
-            while (true) {
-                System.out.println("Please enter the definition of the provided word: ");
-                definitionInput = scanner.nextLine().trim();
-                if (Utilities.isValidDefinitionOrExample(definitionInput)) { // if returns true the word is valid
-                    System.out.println("Definition for " + wordInput + ": " + definitionInput);
-                    break; // Exit the loop if the definition is valid
-                } else {
-                    System.out.println("Invalid definition. Please enter a definition that is more than two words.");
-                }
-            }
-
-            // ask for the part of speech
-            do {
-                System.out.println("""
-                        Please enter the number corresponding to the part of speech of the word:
-                        1. noun - the name of a person, place, thing, or idea.
-                        2. verb - expresses action or being.
-                        3. adjective - modifies or describes a noun or pronoun.
-                        4. adverb - modifies or describes a verb, an adjective, or another adverb.
-                        5. pronoun - a word used in place of a noun.
-                        6. preposition - a word placed before a noun or pronoun to form a phrase modifying another word in the sentence.
-                        7. conjunction - joins words, phrases, or clauses.
-                        8. interjection - a word used to express emotion.
-                        """);
-                partOfSpeechInput = Utilities.partOfSpeechValidator(scanner.nextLine().trim());
-            } while (partOfSpeechInput.equals("invalid"));
-            System.out.println("Part of speech chosen: " + partOfSpeechInput);
-
-            // ask for an example
-            while (true) {
-                System.out.println("Please enter a sentence using the word: ");
-                exampleInput = scanner.nextLine().trim();
-                if (Utilities.isValidDefinitionOrExample(exampleInput)) { // if returns true the word is valid
-                    System.out.println("Example usage of " + wordInput + ": " + exampleInput);
-                    break; // Exit the loop if the definition is valid
-                } else {
-                    System.out.println("Invalid example. Please enter a sentence that is more than two words.");
-                }
-            }
-
-            System.out.println("========== NEW DICTIONARY ENTRY ==========\n" +
-                    "Word: " + wordInput + "\n" +
-                    "Definition: " + definitionInput + "\n" +
-                    "Part of speech: " + partOfSpeechInput + "/n" +
-                    "Example usage: " + exampleInput + "\n\n" +
-                    "**Press 'Enter' to confirm. Type 'exit' and press 'Enter' to start over.**");
-
-            String confirmEntry = scanner.nextLine();
-            continueLoop = !Utilities.newEntryConfirmation(confirmEntry);
+            continueLoop = Menu.confirmNewWord(wordInput, definitionInput, partOfSpeechInput, exampleInput);
 
             newWord = new Word(wordInput, definitionInput, partOfSpeechInput, exampleInput);
         }
 
 
         // ==== UPDATE DICTIONARY ====
-        ArrayList<Word> dictionaryEntries = loadDictionary(); // loads dictionary as an ArrayList
+        ArrayList<Word> dictionaryEntries = getDictionary(); // loads dictionary as an ArrayList
         dictionaryEntries.add(newWord); // adds the newWord Word object to the ArrayList of loaded entries
         WordWriter wordWriter = new WordWriter();
         wordWriter.writeEntries(dictionaryEntries); // runs the saveDictionary method with the updated ArrayList of dictionaryEntries
-        System.out.println("'" + newWord + "' successfully added to dictionary!");
+        System.out.println("'" + newWord + "' successfully added to dictionary!\n");
 
         // ==== UPDATE HISTORY ====
         logHistory.add(newWord.toString()); // adding the word info to the history array
@@ -382,7 +245,7 @@ public class DictionaryManager {
 
 
         // Load dictionary entries
-        ArrayList<Word> dictionaryEntries = loadDictionary();
+        ArrayList<Word> dictionaryEntries = getDictionary();
 
         // This will remove any entries that match any word that are in the array of wordsToDelete.
         dictionaryEntries.removeIf(entry -> { // remove an entry if...
